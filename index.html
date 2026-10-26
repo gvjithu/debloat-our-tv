@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>CleanYourTV | Free TV Care</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg:#0b1120; --panel:#151f32; --muted:#a8b5ca;
+  --accent:#6ee7b7; --border:#29364c;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:#f4f7fb;
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+  line-height:1.6;
+}
+header,main,footer { max-width:1000px; margin:auto; padding:20px; }
+header { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.brand { font-weight:800; font-size:21px; }
+.brand span { color:var(--accent); }
+.pill { border:1px solid var(--border); padding:5px 10px; border-radius:30px; color:var(--muted); font-size:12px; }
+.hero { padding:28px 0 22px; }
+.hero h1 { font-size:clamp(30px,6vw,48px); line-height:1.12; margin:12px 0; }
+.hero p,.muted { color:var(--muted); }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; }
+.card { background:var(--panel); border:1px solid var(--border); border-radius:18px; padding:20px; }
+.card h2,.card h3 { margin-top:0; }
+.symbol { font-size:30px; }
+button,select {
+  font:inherit; border-radius:10px; border:1px solid var(--border);
+  padding:11px 14px; background:#202d43; color:white; cursor:pointer;
+}
+button:hover { border-color:var(--accent); }
+.primary { background:var(--accent); color:#08251b; border-color:var(--accent); font-weight:750; }
+.actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:15px; }
+section { margin:28px 0; }
+h2.section-title { font-size:23px; }
+ul,ol { padding-left:22px; }
+li { margin:8px 0; }
+.notice { border-left:3px solid var(--accent); padding:12px 15px; background:#122c2a; border-radius:5px; }
+footer { color:var(--muted); border-top:1px solid var(--border); font-size:13px; }
+a { color:var(--accent); }
+#testScreen {
+  position:fixed; inset:0; z-index:10; display:none;
+  background:#000; color:white; align-items:center; justify-content:center;
+}
+#testScreen.active { display:flex; }
+#testLabel {
+  position:absolute; top:12px; left:12px; padding:8px 12px;
+  background:#111c; border-radius:8px; font-size:14px;
+}
+#testControls {
+  position:absolute; bottom:16px; display:flex; flex-wrap:wrap;
+  justify-content:center; gap:8px; padding:10px;
+}
+#testControls button { background:#111d; }
+#testControls button:focus-visible { outline:2px solid white; }
+#testScreen.pattern #testLabel,#testScreen.pattern #testControls { opacity:.2; }
+#testScreen.pattern:hover #testLabel,#testScreen.pattern:hover #testControls,
+#testScreen.pattern:focus-within #testLabel,
+#testScreen.pattern:focus-within #testControls { opacity:1; }
+.hidden { display:none !important; }
+@media(max-width:500px) {
+  header,main,footer { padding:15px; }
+  .hero { padding-top:15px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">📺 Clean<span>YourTV</span></div>
+  <span class="pill">FREE TV CARE</span>
+</header>
+
+<main>
+  <div class="hero">
+    <span class="pill">SIMPLE · FREE · BEGINNER FRIENDLY</span>
+    <h1>Make your TV<br>feel better.</h1>
+    <p>Test your screen, learn how to clean up your TV,
+       and follow simple troubleshooting guides.</p>
+    <div class="actions">
+      <button class="primary" onclick="showTests()">Start screen test</button>
+      <button onclick="goTo('cleanup')">Clean up my TV</button>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">What do you want to do?</h2>
+    <div class="grid">
+      <article class="card">
+        <div class="symbol">🎨</div>
+        <h3>Screen & picture test</h3>
+        <p class="muted">Check colours, dark areas, bright areas and gradients.</p>
+        <button class="primary" onclick="showTests()">Start testing</button>
+      </article>
+      <article class="card">
+        <div class="symbol">🧹</div>
+        <h3>Clean up my TV</h3>
+        <p class="muted">Learn how to remove unwanted apps and free storage safely.</p>
+        <button onclick="goTo('cleanup')">View cleanup guide</button>
+      </article>
+      <article class="card">
+        <div class="symbol">📱</div>
+        <h3>Connect my phone</h3>
+        <p class="muted">Learn what is needed for phone-to-TV control over Wi-Fi.</p>
+        <button onclick="goTo('connect')">Connection guide</button>
+      </article>
+      <article class="card">
+        <div class="symbol">🛠️</div>
+        <h3>Fix a picture problem</h3>
+        <p class="muted">Get simple steps for common display issues.</p>
+        <button onclick="goTo('troubleshoot')">Troubleshoot</button>
+      </article>
+    </div>
+  </section>
+
+  <section id="cleanup">
+    <h2 class="section-title">🧹 Clean up your Android TV</h2>
+    <div class="card">
+      <p>These steps are for compatible Android TV and Google TV devices.
+         Menu names differ by manufacturer.</p>
+      <ol>
+        <li>Open <b>Settings → Apps → See all apps</b>.</li>
+        <li>Select an app you recognise and no longer need.</li>
+        <li>If available, choose <b>Uninstall</b> or <b>Disable</b>.
+            Some system apps cannot be removed.</li>
+        <li>Open <b>Settings → Storage</b>, if available, to check free space.</li>
+        <li>Restart the TV and check whether performance improves.</li>
+      </ol>
+      <div class="notice">
+        Safety: do not disable system services randomly. This website
+        does not run ADB commands or modify your TV automatically.
+      </div>
+      <p><a href="https://github.com/Gathin23/cleanyourtv"
+        target="_blank" rel="noopener noreferrer">View the original CleanYourTV project ↗</a></p>
+    </div>
+  </section>
+
+  <section id="connect">
+    <h2 class="section-title">📱 Connect your phone to your TV</h2>
+    <div class="card">
+      <ol>
+        <li>Connect the phone and TV to the same local Wi-Fi network.</li>
+        <li>Check the TV brand and exact model in TV Settings → About.</li>
+        <li>Check whether the manufacturer supports network control,
+            remote-control pairing, or Android Debug Bridge (ADB).</li>
+        <li>Use only a compatible, trusted connection method and approve
+            pairing on the TV itself.</li>
+      </ol>
+      <p class="muted">Opening this dashboard on a phone does not automatically
+         discover or control TVs. A browser cannot freely scan your local
+         network or execute privileged TV commands.</p>
+    </div>
+  </section>
+
+  <section id="troubleshoot">
+    <h2 class="section-title">🛠️ Picture troubleshooting</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Picture looks too dark</h3>
+        <p>Check brightness, backlight or OLED pixel brightness,
+           power-saving settings and ambient-light settings.</p>
+      </article>
+      <article class="card">
+        <h3>Colours look incorrect</h3>
+        <p>Try the standard or cinema picture mode. Check colour
+           temperature, HDMI settings and source-device output.</p>
+      </article>
+      <article class="card">
+        <h3>Lines, flickering or dead pixels</h3>
+        <p>Try another input or source and restart the TV. Persistent
+           defects may require professional service.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">🎨 Screen test patterns</h2>
+    <div class="card">
+      <p>Use the patterns to look for visible irregularities. For a valid
+         assessment, display them on the TV itself, ideally at its native
+         resolution. Browser scaling and video processing can affect results.</p>
+      <button class="primary" onclick="showTests()">Open full-screen tests</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  CleanYourTV Dashboard · Free community tool · Not affiliated with TV manufacturers.
+  This website provides guidance and visual tests, not a hardware repair service.
+</footer>
+
+<div id="testScreen" role="dialog" aria-label="Full-screen TV test">
+  <div id="testLabel">Screen test</div>
+  <div id="testControls">
+    <button onclick="previousTest()">← Previous</button>
+    <button onclick="nextTest()">Next →</button>
+    <button onclick="togglePattern()">Pattern view</button>
+    <button onclick="closeTests()">Exit ✕</button>
+  </div>
+</div>
+
+<script>
+const tests = [
+  {name:"Black",color:"#000000"},
+  {name:"White",color:"#ffffff"},
+  {name:"Red",color:"#ff0000"},
+  {name:"Green",color:"#00ff00"},
+  {name:"Blue",color:"#0000ff"},
+  {name:"50% Grey",color:"#808080"},
+  {name:"Gradient",gradient:true},
+  {name:"Contrast grid",grid:true}
+];
+let testIndex = 0;
+const screen = document.getElementById("testScreen");
+const label = document.getElementById("testLabel");
+
+function renderTest() {
+  const test = tests[testIndex];
+  screen.style.background = test.gradient
+    ? "linear-gradient(to right,#000,#fff)"
+    : test.grid
+    ? "repeating-linear-gradient(0deg,#777 0 1px,transparent 1px 10%),repeating-linear-gradient(90deg,#777 0 1px,#111 1px 10%)"
+    : test.color;
+  label.textContent = (testIndex + 1) + "/" + tests.length + " — " + test.name;
+  screen.classList.remove("pattern");
+}
+function showTests() {
+  testIndex = 0;
+  screen.classList.add("active");
+  document.body.style.overflow = "hidden";
+  renderTest();
+  if (screen.requestFullscreen) {
+    screen.requestFullscreen().catch(() => {});
+  }
+}
+function nextTest() {
+  testIndex = (testIndex + 1) % tests.length;
+  renderTest();
+}
+function previousTest() {
+  testIndex = (testIndex - 1 + tests.length) % tests.length;
+  renderTest();
+}
+function togglePattern() {
+  screen.classList.toggle("pattern");
+}
+function closeTests() {
+  screen.classList.remove("active");
+  document.body.style.overflow = "";
+  if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => {});
+  }
+}
+function goTo(id) {
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+document.addEventListener("keydown", event => {
+  if (!screen.classList.contains("active")) return;
+  if (event.key === "Escape") closeTests();
+  if (event.key === "ArrowRight" || event.key === " ") nextTest();
+  if (event.key === "ArrowLeft") previousTest();
+});
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) {
+    // Keep the test open in the browser if fullscreen is exited.
+  }
+});
+</script>
+</body>
+</html>
